@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/user'); 
 const Post = require('../models/Post'); 
 const auth = require('../middleware/auth'); 
+const roleAuth = require('../middleware/roleAuth'); 
 
 
 router.post('/signup', userController.signup); 

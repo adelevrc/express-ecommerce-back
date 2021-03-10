@@ -77,3 +77,4 @@ exports.updateUser = async (req, res) => {
         res.json({ message : err })
     }
 }
+
