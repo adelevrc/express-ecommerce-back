@@ -20,31 +20,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 
-app.get('/', ((req, res) => {
-  let token = req.headers.authorization.split(' ')[1]; //token
-  console.log("token");
-  console.log(token);
-
-  jwt.verify(token, 'RANDOM_TOKEN_SECRET', (err, decoded) => {
-    if (err) return res.status(401).json({
-      title: 'non autorisé'
-    })
-     // if token is valid
-     User.findOne({ _id: decoded.userId}, (err, user) =>{
-       console.log(err);
-       console.log(user);
-      //if (err) return res.status(400).json(err)
-      if (user.role === "admin") return res.status(200).json({
-        title: 'COOL'
-      })
-      return res.status(401).json({
-        title: 'PAS COOL'
-      })
-     
-    })
-
-  })
-})); 
 
 //Middlewares = a function that executes when routes are being hit 
 app.use('/posts', postsRoute); 

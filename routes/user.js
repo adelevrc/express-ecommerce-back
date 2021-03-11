@@ -8,8 +8,8 @@ const roleAuth = require('../middleware/roleAuth');
 
 router.post('/signup', userController.signup); 
 router.post('/login', userController.login); 
-router.get('/users', userController.getUsers); 
-router.get('/:id', userController.getUser); 
+router.get('/users',roleAuth, userController.getUsers); 
+router.get('/:id', roleAuth, userController.getUser); 
 router.patch('/:id', userController.updateUser); 
 
 
