@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser'); 
 const postsRoute = require('./routes/posts'); 
 const userRoute  = require ('./routes/user'); 
+const commandRoute = require('./routes/command'); 
 const User = require('./models/User')
 const cors = require('cors');
 const {authRole} = require('./basicAuth');
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 //Middlewares = a function that executes when routes are being hit 
 app.use('/posts', postsRoute); 
 app.use('/auth', userRoute); 
+app.use('/commands',commandRoute); 
 
 // On connecte à mongoose 
 mongoose.connect(process.env.DB_CONNECTION,

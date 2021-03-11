@@ -15,7 +15,12 @@ const userSchema = mongoose.Schema({
         type: String, 
         default: 'basic', 
         enum: ["basic", "admin"]
-    }
+    },
+    command:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Command',
+        default:null
+    }]
 }); 
 
 userSchema.plugin(uniqueValidator); 
