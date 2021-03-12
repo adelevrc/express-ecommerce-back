@@ -15,14 +15,17 @@ const userSchema = mongoose.Schema({
         type: String, 
         default: 'basic', 
         enum: ["basic", "admin"]
-    },
-    command:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Command',
-        default:null
-    }]
+    }
 }); 
 
+userSchema.virtual('commandsPassed', {
+    ref:'Command', 
+    localField: '_id', 
+    foreignField: 'user',
+})
+
 userSchema.plugin(uniqueValidator); 
+userSchema.set('toObject', {virtuals: true}); 
+userSchema.set('toJSON', {virtuals: true})
 
 module.exports = mongoose.model('User', userSchema); 

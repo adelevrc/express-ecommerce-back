@@ -80,13 +80,10 @@ exports.updateUser = async (req, res) => {
     }
 }
 
-exports.getAllCommands = async (req, res) => {
-    try{
-        const users = await User.findById(req.params.id).populate("command");
-        res.json(users); 
+// exports.commandByUser = async (req, res) => {
+//     const user = User.findById(req.params.id).populate('command'); 
+//     console.log(user); 
+//     res.json(user.command);
 
-    }catch(err){
-        res.json({ message : err })
-    }
-}; 
+// }
 

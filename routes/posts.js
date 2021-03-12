@@ -4,7 +4,6 @@ const postController = require('../controllers/post');
 const roleAuth = require('../middleware/roleAuth'); 
 
 
-
 router.get('/', postController.getPosts); 
 router.get('/:id',postController.getPost); 
 router.post('/',roleAuth, postController.createPost); 
