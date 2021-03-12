@@ -9,6 +9,8 @@ const User = require('./models/User')
 const cors = require('cors');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const jwt = require('jsonwebtoken'); 
+const PORT = process.env.PORT || 3000;
+
 
 require('dotenv/config'); 
 
@@ -34,5 +36,5 @@ mongoose.connect(process.env.DB_CONNECTION,
     .catch(() => console.log('Connexion to DB failed !'));
 
 // Start listenning to the server
-app.listen(8000);  
+app.listen(PORT);  
 
