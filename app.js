@@ -7,7 +7,6 @@ const userRoute  = require ('./routes/user');
 const ordersRoute = require('./routes/orders'); 
 const User = require('./models/User')
 const cors = require('cors');
-const {authRole} = require('./basicAuth');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const jwt = require('jsonwebtoken'); 
 
