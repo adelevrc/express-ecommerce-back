@@ -10,7 +10,6 @@ router.post('/login', userController.login);
 router.get('/users',roleAuth, userController.getUsers); 
 router.get('/:id', userController.getUser); 
 router.patch('/:id', userController.updateUser); 
-// router.get('/command/:id', userController.commandByUser)
 
 
 

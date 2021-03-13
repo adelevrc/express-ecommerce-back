@@ -22,7 +22,7 @@ exports.getOrder =  async (req, res) => {
 exports.createOrder = async (req, res) => {
     const command = new Command ({
         user: req.body.user, 
-        products: req.body.producs
+        products: req.body.products
     }); 
     try{
         const savedCommand = await command.save()

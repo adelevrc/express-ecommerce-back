@@ -80,10 +80,4 @@ exports.updateUser = async (req, res) => {
     }
 }
 
-// exports.commandByUser = async (req, res) => {
-//     const user = User.findById(req.params.id).populate('command'); 
-//     console.log(user); 
-//     res.json(user.command);
-
-// }
 
