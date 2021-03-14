@@ -5,10 +5,9 @@ const bodyParser = require('body-parser');
 const postsRoute = require('./routes/posts'); 
 const userRoute  = require ('./routes/user'); 
 const ordersRoute = require('./routes/orders'); 
-const User = require('./models/User')
+const animalRoute = require('./routes/animal'); 
 const cors = require('cors');
 const { JsonWebTokenError } = require('jsonwebtoken');
-const jwt = require('jsonwebtoken'); 
 const PORT = process.env.PORT || 8000;
 
 
@@ -22,11 +21,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 
-
 //Middlewares = a function that executes when routes are being hit 
 app.use('/posts', postsRoute); 
 app.use('/auth', userRoute); 
 app.use('/orders',ordersRoute); 
+app.use('/animals', animalRoute); 
 
 // On connecte à mongoose 
 mongoose.connect(process.env.DB_CONNECTION,
