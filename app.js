@@ -2,7 +2,7 @@ const express = require ('express');
 const app = express(); 
 const mongoose = require('mongoose'); 
 const bodyParser = require('body-parser'); 
-const postsRoute = require('./routes/posts'); 
+const productsRoute = require('./routes/item'); 
 const userRoute  = require ('./routes/user'); 
 const ordersRoute = require('./routes/orders'); 
 const animalRoute = require('./routes/animal'); 
@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 
 //Middlewares = a function that executes when routes are being hit 
-app.use('/posts', postsRoute); 
+app.use('/products', productsRoute); 
 app.use('/auth', userRoute); 
 app.use('/orders',ordersRoute); 
 app.use('/animals', animalRoute); 
