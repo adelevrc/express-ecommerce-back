@@ -34,6 +34,8 @@ mongoose.connect(process.env.DB_CONNECTION,
     .then(() => console.log('Connected to DB !'))
     .catch(() => console.log('Connexion to DB failed !'));
 
+
+    module.exports=app; 
 // Start listenning to the server
 console.log(`PORT ${PORT}`);
 app.listen(PORT);  

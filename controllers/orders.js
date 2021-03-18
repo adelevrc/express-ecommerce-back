@@ -1,32 +1,56 @@
-const Command = require('../models/Order'); 
+const Order = require('../models/Order'); 
+const User = require('../models/User'); 
+const jwt = require('jsonwebtoken'); 
+
 
 exports.getOrders = async (req, res) => {
     try{
-        const command = await Command.find();
-        res.json(command); 
+        const order = await Order.find();
+        res.json(order); 
 
     }catch(err){
         res.json({ message : err })
     }
 }; 
 
+exports.getOrdersByUser = async (req, res, next) => {
+
+    console.log(req.headers.authorization.split(' ')[1]); 
+    token = req.headers.authorization.split(' ')[1]; 
+    
+    jwt.verify(token, 'RANDOM_TOKEN_SECRET', (err, decoded) => {
+      if (err) return res.status(401).json({
+        title: 'non autorisé'
+      })
+
+        User.findOne({ _id: decoded.userId}, (err, user) =>{
+        if (err) return res.status(400).json(err)
+        console.log(user);
+        console.log(user._id);
+        return Order.find({user:decoded.userId})
+        .then(products => res.status(200).json(products))
+        .catch(error => res.status(400).json({ error }));
+      })
+    }) 
+};
+
 exports.getOrder =  async (req, res) => {
     try{
-        const command = await Command.findById(req.params.id);
-        res.json(command); 
+        const order = await Order.findById(req.params.id);
+        res.json(order); 
     }catch(err){
         res.json({ message : err })
     }
 }; 
 
 exports.createOrder = async (req, res) => {
-    const command = new Command ({
+    const order = new Order ({
         user: req.body.user, 
         products: req.body.products
     }); 
     try{
-        const savedCommand = await command.save()
-        res.json(savedCommand)
+        const savedOrder = await order.save()
+        res.json(savedOrder)
 
     }catch(err){
         res.json({ message : err })
@@ -36,8 +60,8 @@ exports.createOrder = async (req, res) => {
 
 exports.deleteOrder =  async (req,res) => {
     try {
-    const removedCommand = await Command.deleteOne({ _id: req.params.id })
-    res.json(removedCommand); 
+    const removedOrder = await Order.deleteOne({ _id: req.params.id })
+    res.json(removedOrder); 
     } catch(err) {
         res.json({ message : err })
     }
@@ -45,26 +69,14 @@ exports.deleteOrder =  async (req,res) => {
 
 exports.updateOrder = async (req, res) => {
     try {
-        const updatedCommand = await Command.updateOne(
+        const updatedOrder = await Order.updateOne(
             { _id: req.params.id }, { ...req.body, _id: req.params.id }
         ); 
-        res.json(updatedCommand); 
+        res.json(updatedOrder); 
     }catch(err) {
         res.json({ message : err })
     }
 };
-
-// exports.userByCommand = async (req, res) => {
-//     try{
-//         console.log(req.params);
-//         const userByCommand = await Command.findById(req.params.id).populated('user');
-//         res.json(userByCommand); 
-    
-//     }catch(err){
-//         res.json({ message : 'ohlala' })
-//     }
-
-// }
 
 // je veux pour une commande, le nom de l'utilisateur
 exports.userByCommand = async (req, res) => {
