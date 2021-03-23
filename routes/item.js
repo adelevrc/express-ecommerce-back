@@ -5,8 +5,8 @@ const roleAuth = require('../middleware/roleAuth');
 
 router.get('/', itemController.getItems); 
 router.get('/:id',itemController.getItem); 
-router.post('/', itemController.createItem); 
+router.post('/', roleAuth, itemController.createItem); 
 router.delete('/:id', roleAuth, itemController.deleteItem); 
-router.patch('/:id',roleAuth, itemController.updateItem); 
+router.patch('/:id', roleAuth, itemController.updateItem); 
 
 module.exports=router; 
