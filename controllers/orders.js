@@ -19,6 +19,7 @@ exports.getOrdersByUser = async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1]; 
     
     jwt.verify(token, 'RANDOM_TOKEN_SECRET', (err, decoded) => {
+        
       if (err) return res.status(401).json({
         title: 'non autorisé'
       })

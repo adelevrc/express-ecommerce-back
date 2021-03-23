@@ -1,91 +1,86 @@
 const app = require('../app'); 
 const Animal = require ('../models/Animal'); 
 const request = require("supertest"); 
+const mongoose = require('mongoose')
+require('dotenv/config'); 
 
 
-///////////////////////////////////////////  TESTING GET  OK
-// describe("GET / ", () => {
-//     test("It should respond with an array of products", async () => {
-//       const response = await request(app).get("/products");
-//       expect(response.body[0]).toHaveProperty("_id");
-//       expect(response.body[1]).toHaveProperty("title");
-//       expect(response.statusCode).toBe(200);
-//     });
-//   });
+
+/////////////////////////////////////////  TESTING GET  OK
+describe("GET / ", () => {
+    test("It should respond with name of the two firsts animals", async () => {
+      const response = await request(app).get("/animals");
+      expect(response.body[0].name).toEqual("Flipper");
+      expect(response.body[1].name).toEqual("Wally");
+      expect(response.statusCode).toBe(200);
+    });
+  });
 
 /////////////////////////////////////////////// TESTING POST OK 
 
-// describe("POST /animals", () => {
-//     test("It responds with the newly created animals", async () => {
-//       const newAnimal = await request(app)
-//         .post("/animals")
-//         .send({
-//           name: "test animal",
-//           description:"est ce que ça passe ?",
-//           care:"on croise les doigts",
-//           isDead:true
-//         });
-//         expect(newAnimal.body).toHaveProperty("_id");
-//       expect(newAnimal.body.name).toBe("test animal");
-//       expect(newAnimal.body.description).toBe("est ce que ça passe ?");
-//       expect(newAnimal.body.care).toBe("on croise les doigts");
-//       expect(newAnimal.body.isDead).toBe(true);
-//       expect(newAnimal.statusCode).toBe(200);
+describe("POST /animals", () => {
+    test("It responds with the newly created animals", async () => {
+      const newAnimal = await request(app)
+        .post("/animals")
+        .send({
+          name: "Peanuts",
+          description:"Loremp Ipsum",
+          care:"Loremp Ipsum",
+          isDead:true
+        });
+        expect(newAnimal.body).toHaveProperty("_id");
+      expect(newAnimal.body.name).toBe("Peanuts");
+      expect(newAnimal.body.description).toBe("Loremp Ipsum");
+      expect(newAnimal.body.care).toBe("Loremp Ipsum");
+      expect(newAnimal.body.isDead).toBe(true);
+      expect(newAnimal.statusCode).toBe(200);
 
-//     });
-//   });
+    });
+  });
 
 
-///////////////////////////////////////////// TESTING PATCH OK 
+///////////////////////////////////////////// TESTING PATCH  
 
-// test("PATCH /animals/:id",  () => {
+test("return an updated animal newly created",  async () => {
 
-// 	const animal =  Animal.create({
-//         name: "test animal",
-//         description:"est ce que ça passe ?",
-//         care:"on croise les doigts",
-//         isDead:true
-// 	})
+    const animal =  await Animal.create({
+        name: "Albert",
+        description:"ceci est une description",
+        care:"ceci sont les soins à apporter",
+        isDead:true
+    })
 
-// 	const data = {
-//         name: "mon nouvel animal youpi",
-//         description:"est ce que ça passe aujourd'hui ou ça fait comme hier?"
-// 	}
-    
-//     request(app)
+    const data = {
+        name: "Albertine",
+        description:"il semblerait qu'Albert soit une femelle"
+    }
+        
+    const response = await request(app)
+        .patch("/animals/" + animal.id)
+        .send(data)
+            
+    const newAnimal = await Animal.findOne({ _id: animal.id })
+        expect(newAnimal).toBeTruthy()
+        expect(newAnimal.name).toBe(data.name)
+        expect(newAnimal.description).toBe(data.description)
+})
 
-// 		.patch("/animals/" + animal.id)
-// 		.send(data)
-// 		.expect(200)
-// 		.then((response) => {
-// 			// Check the response
-//             console.log(response.body.type); 
-// 			expect(response.body._id).toBe(animal._id)
-//             expect(response.body.name).toBe(data.name)
-//             expect(response.body.description).toBe(data.description)
-
-// 			// Check the data in the database
-// 			// const newAnimal = await Animal.findOne({ _id: response.body._id })
-// 			// expect(newAnimal).toBeTruthy()
-// 			// expect(newAnimal.title).toBe(data.name)
-// 			// expect(newAnimal.content).toBe(data.description)
-// 		})
-// })
 
 ///////////////////////////////////////////// TESTING DELETE OK 
 
-// test("DELETE /animals/:id", () => {
-// 	const animal =  Animal.create({
-//         name: "test animal",
-//         description:"est ce que ça passe ?",
-//         care:"on croise les doigts",
-//         isDead:true
-// 	})
+test("DELETE /animals/:id", async () => {
+	const animal =  Animal.create({
+        name: "Albert",
+        description:"Ceci est une description",
+        care:"Ceci sont les soins à apporter",
+        isDead:true
+	})
 
-// 	 request(app)
-// 		.delete("/animals/" + animal.id)
-// 		.expect(204)
-// 		.then( () => {
-// 			expect(Animal.findOne({ _id: post.id })).toBeFalsy()
-// 		})
-// })
+    const response = await request(app)
+		.delete("/animals/" + animal.id);
+        expect(response.status).toBe(200);
+
+    const animalToBeNotFound = await Animal.findOne({ _id: animal.id });
+	    expect(animalToBeNotFound).toBe(null);
+		
+})

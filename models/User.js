@@ -15,7 +15,14 @@ const userSchema = mongoose.Schema({
         type: String, 
         default: 'basic', 
         enum: ["basic", "admin"]
+    }, 
+    name:{
+        type:String
+    }, 
+    phoneNumber:{
+        type:Number
     }
+
 }); 
 
 userSchema.virtual('commandsPassed', {
