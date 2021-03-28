@@ -28,7 +28,7 @@ exports.getOrdersByUser = async (req, res, next) => {
         if (err) return res.status(400).json(err)
         console.log(user);
         console.log(user._id);
-        return Order.find({user:decoded.userId})
+        return Order.find({user:decoded.userId}).populate('Products')
         .then(products => res.status(200).json(products))
         .catch(error => res.status(400).json({ error }));
       })
@@ -78,17 +78,4 @@ exports.updateOrder = async (req, res) => {
         res.json({ message : err })
     }
 };
-
-// je veux pour une commande, le nom de l'utilisateur
-exports.userByCommand = async (req, res) => {
-    try {
-       const data = await Command.find()
-                                 .populate({path: 'user', select: '_id email'});
-       res.status(200).json({success: true, data});
-       console.log('Ohyes'); 
-    } catch (err) {
-       res.status(400).json({success: false, message:err.message});
-       console.log('ohno'); 
-    }
- }
 

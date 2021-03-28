@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 require('dotenv/config'); 
 
 
-
 /////////////////////////////////////////  TESTING GET  OK
 describe("GET / ", () => {
     test("It should respond with name of the two firsts animals", async () => {
@@ -28,7 +27,7 @@ describe("POST /animals", () => {
           care:"Loremp Ipsum",
           isDead:true
         });
-        expect(newAnimal.body).toHaveProperty("_id");
+      expect(newAnimal.body).toHaveProperty("_id");
       expect(newAnimal.body.name).toBe("Peanuts");
       expect(newAnimal.body.description).toBe("Loremp Ipsum");
       expect(newAnimal.body.care).toBe("Loremp Ipsum");

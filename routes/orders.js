@@ -9,9 +9,6 @@ router.get('/:id',orderController.getOrder);
 router.post('/', orderController.createOrder); 
 router.delete('/:id', orderController.deleteOrder); 
 router.patch('/:id', orderController.updateOrder); 
-// router.get('/user/:id', commandController.userByCommand); 
-
-router.get('/',orderController.userByCommand);
 
  
 
