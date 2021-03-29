@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 exports.getOrders = async (req, res) => {
     try{
-        const order = await Order.find();
+        const order = await Order.find().populate('products');
         res.json(order); 
 
     }catch(err){
@@ -15,7 +15,6 @@ exports.getOrders = async (req, res) => {
 
 exports.getOrdersByUser = async (req, res, next) => {
 
-    console.log(req.headers.authorization.split(' ')[1]); 
     token = req.headers.authorization.split(' ')[1]; 
     
     jwt.verify(token, 'RANDOM_TOKEN_SECRET', (err, decoded) => {
@@ -28,7 +27,7 @@ exports.getOrdersByUser = async (req, res, next) => {
         if (err) return res.status(400).json(err)
         console.log(user);
         console.log(user._id);
-        return Order.find({user:decoded.userId}).populate('Products')
+        return Order.find({user:decoded.userId}).populate('products')
         .then(products => res.status(200).json(products))
         .catch(error => res.status(400).json({ error }));
       })
