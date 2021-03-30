@@ -2,10 +2,11 @@ const express = require ('express');
 const app = express(); 
 const mongoose = require('mongoose'); 
 const bodyParser = require('body-parser'); 
-const productsRoute = require('./routes/item'); 
+const productsRoute = require('./routes/product'); 
 const userRoute  = require ('./routes/user'); 
 const ordersRoute = require('./routes/orders'); 
 const animalRoute = require('./routes/animal'); 
+const quantityRoute = require('./routes/quantityOfProductOrdered'); 
 const cors = require('cors');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const PORT = process.env.PORT || 8000;
@@ -25,7 +26,8 @@ app.use(bodyParser.json());
 app.use('/products', productsRoute); 
 app.use('/auth', userRoute); 
 app.use('/orders',ordersRoute); 
-app.use('/animals', animalRoute); 
+app.use('/animals', animalRoute);
+app.use('/quantity', quantityRoute); 
 
 // On connecte à mongoose 
 mongoose.connect(process.env.DB_CONNECTION,

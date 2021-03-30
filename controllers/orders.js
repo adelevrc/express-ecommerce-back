@@ -25,8 +25,6 @@ exports.getOrdersByUser = async (req, res, next) => {
 
         User.findOne({ _id: decoded.userId}, (err, user) =>{
         if (err) return res.status(400).json(err)
-        console.log(user);
-        console.log(user._id);
         return Order.find({user:decoded.userId}).populate('products')
         .then(products => res.status(200).json(products))
         .catch(error => res.status(400).json({ error }));
@@ -55,7 +53,6 @@ exports.createOrder = async (req, res) => {
     }catch(err){
         res.json({ message : err })
     }
-
 }
 
 exports.deleteOrder =  async (req,res) => {
