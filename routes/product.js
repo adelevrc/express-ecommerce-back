@@ -10,3 +10,4 @@ router.delete('/:id', roleAuth, productController.deleteProduct);
 router.patch('/:id', roleAuth, productController.updateProduct); 
 
 module.exports=router; 
+
