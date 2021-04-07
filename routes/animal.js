@@ -7,6 +7,6 @@ router.get('/', animalController.getAnimals);
 router.get('/:id',animalController.getAnimal); 
 router.post('/',animalController.createAnimal); 
 router.delete('/:id', animalController.deleteAnimal); 
-router.patch('/:id', animalController.updateAnimal); 
+router.patch('/:id', roleAuth, animalController.updateAnimal); 
 
 module.exports=router; 
