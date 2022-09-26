@@ -3,7 +3,7 @@
 
 Databases schema and code by myself.\
 Generate token for auth.\
-Protected route depending on user roles.\
+Protected route depending on user roles.
 
 ## Technos : 
-- Express.js \
+- Express.js 
